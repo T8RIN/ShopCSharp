@@ -1,0 +1,29 @@
+﻿@model ShopViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Shop Tables</h1>
+
+    <div class="sort-dropdown">
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" name="sortBy" onchange="sortCustomers(this.value)">
+            <!option value="id" @(Model.CurrentSort == "id" ? "selected" : "")>ID</!option>
+            <!option value="name" @(Model.CurrentSort == "name" ? "selected" : "")>Name</!option>
+            <!option value="email" @(Model.CurrentSort == "email" ? "selected" : "")>Email</!option>
+        </select>
+    </div>
+
+    <ul>
+        @foreach (var customer in Model.Customers) {
+            <li>@customer</li>
+        }
+    </ul>
+</div>
+
+<script>
+    function sortCustomers(sortBy) {
+        window.location.href = '@Url.Action("SortCustomers", "Home")?sortBy=' + sortBy;
+    }
+</script>
