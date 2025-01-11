@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Shop;
+using Shop.Controllers;
 using Shop.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<ShopViewModel>();
 
 // Add services to the container.
+builder.Services.AddScoped<IFloatOperator, DifferenceFloatOperator>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

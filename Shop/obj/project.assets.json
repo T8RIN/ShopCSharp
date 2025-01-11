@@ -963,12 +963,14 @@
       "outputPath": "C:\\Users\\malik\\RiderProjects\\Shop\\Shop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\malik\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\malik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Users\\malik\\.dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },

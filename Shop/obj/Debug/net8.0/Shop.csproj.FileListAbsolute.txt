@@ -51,3 +51,4 @@ C:\Users\malik\RiderProjects\Shop\Shop\bin\Debug\net8.0\Npgsql.EntityFrameworkCo
 C:\Users\malik\RiderProjects\Shop\Shop\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\malik\RiderProjects\Shop\Shop\obj\Debug\net8.0\Shop.csproj.AssemblyReference.cache
 C:\Users\malik\RiderProjects\Shop\Shop\obj\Debug\net8.0\Shop.csproj.CopyComplete
+C:\Users\malik\RiderProjects\Shop\Shop\obj\Debug\net8.0\Shop.sourcelink.json

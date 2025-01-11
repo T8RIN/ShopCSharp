@@ -33,3 +33,26 @@ public class HomeController : Controller {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+
+public interface IFloatOperator {
+    public float Calc(float a, float b);
+}
+
+internal class DifferenceFloatOperator : IFloatOperator {
+    public float Calc(float a, float b) => a - b;
+}
+
+internal class SumFloatOperator : IFloatOperator {
+    public float Calc(float a, float b) => a + b;
+}
+
+public class OperationController(IFloatOperator floatOperator) : Controller {
+    private readonly IFloatOperator _floatOperator = floatOperator;
+
+    public IActionResult Calc(float a, float b) {
+        var result = _floatOperator.Calc(a, b);
+        Console.WriteLine($"{result} from {_floatOperator}");
+
+        return Json(new { result });
+    }
+}
