@@ -12,17 +12,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddTransient<ShopViewModel>();
 
-// Add services to the container.
-builder.Services.AddScoped<IFloatOperator, DifferenceFloatOperator>();
+builder.Services.AddTransient<InterviewViewModel>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Interview/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -36,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Interview}/{action=Index}/{id?}");
 
 app.Run();

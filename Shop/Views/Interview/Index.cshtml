@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Shop.Controllers
+@model Shop.Controllers.InterviewViewModel
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Генератор вопросов</title>
+</head>
+<body>
+<form method="post" asp-controller="Interview" asp-action="GetQuestions">
+    <label for="position">Выберите должность:</label>
+    <select name="position" id="position">
+        <option value="Developer" selected="@(Model.SelectedPosition == Position.Developer)">Разработчик</option>
+        <option value="Manager" selected="@(Model.SelectedPosition == Position.Manager)">Менеджер</option>
+    </select>
+    <button type="submit">Сгенерировать вопросы</button>
+</form>
+
+@if (Model.Questions.Count > 0) {
+    <h2>Список вопросов:</h2>
+    <ul>
+        @foreach (var question in Model.Questions) {
+            <li>@question</li>
+        }
+    </ul>
+}
+</body>
+</html>

@@ -4,55 +4,39 @@ using Shop.Models;
 
 namespace Shop.Controllers;
 
-public class HomeController : Controller {
-    private readonly ShopViewModel _shopViewModel;
-    private readonly ILogger<HomeController> _logger;
+public enum Position {
+    Developer,
+    Manager
+}
 
-    public HomeController(ShopViewModel shopViewModel, ILogger<HomeController> logger) {
-        _logger = logger;
-        _shopViewModel = shopViewModel;
-    }
+public interface IQuestionRepository {
+    List<string> GetQuestions(Position position);
+}
 
-    public async Task<IActionResult> Index(string? sortBy) {
-        await _shopViewModel.LoadCustomers(sortBy ?? _shopViewModel.CurrentSort);
-        return View(_shopViewModel);
-    }
+public class QuestionRepository : IQuestionRepository {
+    private readonly Dictionary<Position, List<string>> _questions = new() {
+        { Position.Developer, ["Что такое ООП?", "Что такое SOLID?"] },
+        { Position.Manager, ["Как вы управляете командой?", "Какие методологии Agile знаете?"] }
+    };
 
-    [HttpGet]
-    public async Task<IActionResult> SortCustomers(string sortBy) {
-        await _shopViewModel.LoadCustomers(sortBy);
-        return RedirectToAction("Index", new { sortBy });
-    }
-
-    public IActionResult Privacy() {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error() {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    public List<string> GetQuestions(Position position) {
+        return _questions.TryGetValue(position, out var question) ? question : ["Вопросы не найдены."];
     }
 }
 
-public interface IFloatOperator {
-    public float Calc(float a, float b);
-}
-
-internal class DifferenceFloatOperator : IFloatOperator {
-    public float Calc(float a, float b) => a - b;
-}
-
-internal class SumFloatOperator : IFloatOperator {
-    public float Calc(float a, float b) => a + b;
-}
-
-public class OperationController(IFloatOperator floatOperator) : Controller {
-    private readonly IFloatOperator _floatOperator = floatOperator;
-
-    public IActionResult Calc(float a, float b) {
-        var result = _floatOperator.Calc(a, b);
-        Console.WriteLine($"{result} from {_floatOperator}");
-
-        return Json(new { result });
+public class InterviewController(IQuestionRepository repository) : Controller {
+    public IActionResult Index() {
+        return View(new InterviewViewModel());
     }
+
+    [HttpPost]
+    public IActionResult GetQuestions(Position position) {
+        var questions = repository.GetQuestions(position);
+        return View("Index", new InterviewViewModel { SelectedPosition = position, Questions = questions });
+    }
+}
+
+public class InterviewViewModel {
+    public Position? SelectedPosition { get; set; } = null;
+    public List<string> Questions { get; set; } = [];
 }
